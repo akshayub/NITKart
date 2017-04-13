@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shoppingCartWindowLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ub.akshay.nitkart.ShoppingCartWindow">
+
+    <TextView
+        android:id="@+id/shoppingCartTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:textSize="32sp"
+        android:text="Shopping Cart"/>
+
+    <LinearLayout
+        android:id="@+id/buttonLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/returnToPrevPage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:backgroundTint="#eeeeee"
+            android:maxLines="2"
+            android:text="Continue\nShopping"/>
+        <Button
+            android:id="@+id/clearCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:backgroundTint="#eeeeee"
+            android:text="Clear Cart"/>
+        <Button
+            android:id="@+id/checkOut"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:backgroundTint="#eeeeee"
+            android:text="Check Out"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/paymentDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonLinearLayout"
+        android:padding="8dp"
+        android:background="#dddddd"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="Total"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/totalPriceCheckout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/shoppingCartList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shoppingCartTitle"
+        android:layout_above="@id/paymentDetails">
+
+    </ListView>
+
+</RelativeLayout>
