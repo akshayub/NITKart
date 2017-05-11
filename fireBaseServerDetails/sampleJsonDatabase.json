@@ -1,0 +1,15 @@
+{
+  "items" : {
+    "item0" : {
+      "description" : "NOTE : add items in the following format",
+      "name" : "sample name",
+      "price" : 0,
+      "productID" : 0,
+      "quantity" : 0,
+      "type" : "sample type"
+    }
+  },
+  "users" : {
+    "dummy" : "keep this entry. without this, the other entries won't appear on the database"
+  }
+}
