@@ -19,5 +19,5 @@ The imager server is thanks to the [gist](https://gist.github.com/peterkuma/8916
 A sidenote : The **images should be named with the corresponding product ID**, and **jpg format** is preferred. <br>
 You need to register the application imported to Android studio with Firebase.<br>
 <hr>
-##Contributing<br>
+## Contributing<br>
 Feel free to add more features, like search functionality, and sorting/filtering the items, categorizing them into different categories based on the type, etc ...
