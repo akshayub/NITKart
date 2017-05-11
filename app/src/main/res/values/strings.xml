@@ -23,8 +23,7 @@
     <string name="forgot_password"><u>Forgot Password?</u></string>
     <string name="title_activity_individual_product">IndividualProduct</string>
 
-    <!--<string name="ip">http://10.50.16.182:3000/</string>-->
-    <string name="ip">http://192.168.43.46:3000/</string>
-    <!--<string name="ip">http://10.100.1.41:3000/</string>-->
+    <!-- Add the IP address of the image server here and build the APK or deploy the server somewhere and fix the IP Address in the apk below -->
+    <string name="ip"></string>
 
 </resources>
