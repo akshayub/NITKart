@@ -34,6 +34,7 @@ captures/
 
 # Intellij
 *.iml
+.idea/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -48,6 +49,7 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+app/google-services.json
 
 # Freeline
 freeline.py
