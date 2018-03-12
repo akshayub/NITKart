@@ -1,6 +1,7 @@
 package com.ub.akshay.nitkart;
 
 import android.content.Intent;
+import android.graphics.Path;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,6 +78,7 @@ public class OpenScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Function not yet set.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(OpenScreen.this, forgotPassword.class));
             }
         });
 

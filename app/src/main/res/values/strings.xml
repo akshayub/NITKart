@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">NITKart</string>
     <string name="register">New User? <u>Click to Register</u></string>
+    <string name="forget_password_email_entry">Enter your registered email id here</string>
+    <string name="submit">Submit</string>
+    <string name="reset_password_toast">Check mail to create new password</string>
 
 
     <!-- Strings related to login -->

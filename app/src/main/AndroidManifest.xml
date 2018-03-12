@@ -33,7 +33,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ShoppingCartWindow" />
-        <activity android:name=".CheckOutScreen"></activity>
+        <activity android:name=".CheckOutScreen" />
+        <activity android:name=".forgotPassword"></activity>
     </application>
 
 </manifest>
