@@ -9,10 +9,10 @@ import java.text.NumberFormat;
 
 public class ShoppingItem implements Serializable{
 
-    private String name, type, description;
-    private int price, quantity, productID;
+    private String name, type, description, productID;
+    private int price, quantity;
 
-    public ShoppingItem(int productId, String name, String type, String description, int price, int quantity){
+    public ShoppingItem(String productId, String name, String type, String description, int price, int quantity){
         this.productID = productId;
         this.name = name;
         this.type = type;
@@ -25,7 +25,7 @@ public class ShoppingItem implements Serializable{
         this.quantity = quantity;
     }
 
-    public int getProductID() {
+    public String getProductID() {
         return productID;
     }
 

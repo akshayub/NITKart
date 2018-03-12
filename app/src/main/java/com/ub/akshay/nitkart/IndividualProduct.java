@@ -161,7 +161,7 @@ public class IndividualProduct extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            int productID = Integer.valueOf(snap.child("productID").getValue().toString());
+                            String productID = snap.child("productID").getValue().toString();
 
                             if (productID == item.getProductID()){
                                 isItemAlreadyInCart = true;

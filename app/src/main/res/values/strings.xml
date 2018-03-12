@@ -4,6 +4,7 @@
     <string name="forget_password_email_entry">Enter your registered email id here</string>
     <string name="submit">Submit</string>
     <string name="reset_password_toast">Check mail to create new password</string>
+    <string name="sellerRegister">Register as seller</string>
 
 
     <!-- Strings related to login -->

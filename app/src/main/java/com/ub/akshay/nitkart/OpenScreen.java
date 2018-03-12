@@ -1,7 +1,6 @@
 package com.ub.akshay.nitkart;
 
 import android.content.Intent;
-import android.graphics.Path;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ public class OpenScreen extends AppCompatActivity {
     private static final String TAG = OpenScreen.class.getSimpleName();
     private Button loginButton;
     private EditText user, pass;
-    private TextView newUser, resetPassword;
+    private TextView newUser, resetPassword, newSeller;
     private String username, password;
 
     private FirebaseAuth mAuth;
@@ -40,6 +39,7 @@ public class OpenScreen extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.passwordLogin);
         setInputs(true);
         newUser = (TextView) findViewById(R.id.newUserRegistration);
+        newSeller = (TextView) findViewById(R.id.newSellerRegistration);
         resetPassword = (TextView) findViewById(R.id.forgotPassword);
         progressBar = (ProgressBar) findViewById(R.id.loginPageProgressBar);
 
@@ -78,7 +78,6 @@ public class OpenScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Function not yet set.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(OpenScreen.this, forgotPassword.class));
             }
         });
 
@@ -86,7 +85,18 @@ public class OpenScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent newUserReg = new Intent(OpenScreen.this, newUser.class);
+                newUserReg.putExtra("seller", false);
                 startActivity(newUserReg);
+                finish();
+            }
+        });
+
+        newSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newSellerReg = new Intent(OpenScreen.this, newUser.class);
+                newSellerReg.putExtra("seller", true);
+                startActivity(newSellerReg);
                 finish();
             }
         });

@@ -69,10 +69,20 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/newUserRegistration"
+        android:id="@+id/newSellerRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="@string/sellerRegister"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/newUserRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/newSellerRegistration"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:text="@string/register"

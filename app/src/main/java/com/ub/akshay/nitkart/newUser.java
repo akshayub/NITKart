@@ -3,6 +3,7 @@ package com.ub.akshay.nitkart;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ub.akshay.nitkart.R.id.userRegistrationPageTitle;
+
 public class newUser extends AppCompatActivity {
 
     private static final String TAG = OpenScreen.class.getSimpleName();
@@ -35,7 +39,7 @@ public class newUser extends AppCompatActivity {
     private Button mRegister;
     private String email, password, passwordVerification;
     private EditText username, pass, passVerification, firstname, lastname;
-    private boolean isRegistrationClicked = false;
+    private boolean isRegistrationClicked = false, isSeller = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,12 @@ public class newUser extends AppCompatActivity {
         passVerification = (EditText) findViewById(R.id.passwordRegistrationConfirmation);
         firstname = (EditText) findViewById(R.id.firstName);
         lastname = (EditText) findViewById(R.id.lastName);
+
+        isSeller = getIntent().getExtras().getBoolean("seller");
+        if(isSeller){
+            ((TextView) findViewById(R.id.userRegistrationPageTitle)).setText("Seller Registration");
+        }
+
         setViews(true);
 
         progressBar = (ProgressBar) findViewById(R.id.registrationPageProgressBar);
@@ -63,28 +73,47 @@ public class newUser extends AppCompatActivity {
                             setDisplayName(name).build();
                     user.updateProfile(profileChangeRequest);
 
+                    DatabaseReference myRef;
 
-                    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
-                    myRef.child(user.getUid()).push();
+                    if (!isSeller){
+                        myRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+                        myRef.child(user.getUid()).push();
 
-                    // As firebase does not accept keys with empty values, I'm putting a dummy item with empty Strings and -1 as ints
-                    // Quantity of items in cart is not realtime database quantity but the quantity the user wants
-                    ArrayList<ShoppingItem> cart = new ArrayList<>();
-                    cart.add(new ShoppingItem(-1, "", "", "", -1, -1));
-                    Map<String, Object> cartItems = new HashMap<>();
-                    cartItems.put("cartItems", cart);
+                        // As firebase does not accept keys with empty values, I'm putting a dummy item with empty Strings and -1 as ints
+                        // Quantity of items in cart is not realtime database quantity but the quantity the user wants
+                        ArrayList<ShoppingItem> cart = new ArrayList<>();
+                        cart.add(new ShoppingItem("", "", "", "", -1, -1));
+                        Map<String, Object> cartItems = new HashMap<>();
+                        cartItems.put("cartItems", cart);
 
-                    // Adding a isCartEmpty State Variable for cart window display
+                        // Adding a isCartEmpty State Variable for cart window display
 
-                    Map<String, Object> cartState = new HashMap<>();
-                    cartState.put("isCartEmpty", Boolean.TRUE);
+                        Map<String, Object> cartState = new HashMap<>();
+                        cartState.put("isCartEmpty", Boolean.TRUE);
 
-                    // Updating the database for the user
-                    myRef.updateChildren(cartItems);
-                    myRef.updateChildren(cartState);
+                        // Updating the database for the user
+                        myRef.updateChildren(cartItems);
+                        myRef.updateChildren(cartState);
+                    } else {
+                        myRef = FirebaseDatabase.getInstance().getReference("sellers").child(user.getUid());
+                        myRef.child(user.getUid()).push();
 
+//                        Dummy product sold by any seller who has 0 products
+                        ArrayList<ShoppingItem> prods = new ArrayList<>();
+                        prods.add(new ShoppingItem("", "", "", "", -1, -1));
+                        Map<String, Object> prodslist = new HashMap<>();
+                        prodslist.put("products", prods);
+
+                        Map<String, Object> state = new HashMap<>();
+                        state.put("numProducts", 0);
+
+                        // Updating the database for the seller
+                        myRef.updateChildren(prodslist);
+                        myRef.updateChildren(state);
+                    }
 
                     sendVerificationEmail();
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -110,7 +139,6 @@ public class newUser extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -158,7 +186,8 @@ public class newUser extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(newUser.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(newUser.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(newUser.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             setViews(true);
                             isRegistrationClicked = false;
                             progressBar.setVisibility(View.GONE);

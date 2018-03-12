@@ -63,6 +63,7 @@ public class ShoppingCartWindow extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getKey().equals(user.getUid())) {
+                                Log.e("CART", dataSnapshot.child("isCartEmpty").getValue().toString());
                                 isCartEmpty = (Boolean) dataSnapshot.child("isCartEmpty").getValue();
                                 if (isCartEmpty) {
                                     priceView.setText(NumberFormat.getCurrencyInstance().format(0));
@@ -150,7 +151,7 @@ public class ShoppingCartWindow extends AppCompatActivity {
             quantity = Integer.valueOf(snap.child("quantity").getValue().toString());
 
             items.add(new ShoppingItem(
-                    Integer.valueOf(snap.child("productID").getValue().toString()),
+                    snap.child("productID").getValue().toString(),
                     snap.child("title").getValue().toString(),
                     snap.child("type").getValue().toString(),
                     snap.child("description").getValue().toString(),
@@ -177,7 +178,7 @@ public class ShoppingCartWindow extends AppCompatActivity {
             // As firebase does not accept keys with empty values, I'm putting a dummy item with empty Strings and -1 as ints
             // Quantity of items in cart is not realtime database quantity but the quantity the user wants
             ArrayList<ShoppingItem> cart = new ArrayList<>();
-            cart.add(new ShoppingItem(-1, "", "", "", -1, -1));
+            cart.add(new ShoppingItem("", "", "", "", -1, -1));
             Map<String, Object> cartItems = new HashMap<>();
             cartItems.put("cartItems", cart);
 

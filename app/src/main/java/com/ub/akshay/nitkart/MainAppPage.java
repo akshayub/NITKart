@@ -32,6 +32,7 @@ public class MainAppPage extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("items");
+
     private Boolean exit = false;
     private ArrayList<ShoppingItem> shoppingItems;
 
@@ -137,7 +138,7 @@ public class MainAppPage extends AppCompatActivity {
         for (DataSnapshot item : dataSnapshot.getChildren()) {
 
             items.add(new ShoppingItem(
-                    Integer.valueOf(item.child("productID").getValue().toString()),
+                    item.child("productID").getValue().toString(),
                     item.child("name").getValue().toString(),
                     item.child("type").getValue().toString(),
                     item.child("description").getValue().toString(),
