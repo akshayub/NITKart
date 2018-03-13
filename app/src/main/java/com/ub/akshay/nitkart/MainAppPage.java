@@ -40,53 +40,64 @@ public class MainAppPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_app_page);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("NITKart");
-        setSupportActionBar(toolbar);
+        if(getIntent().getExtras().getBoolean("isuserseller")){
+            setContentView(R.layout.activity_seller_main_page);
 
-        FloatingActionButton shoppingCart = (FloatingActionButton) findViewById(R.id.cartMainPage);
-        shoppingCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ShoppingCartWindow.class));
-            }
-        });
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle("NITKart Sellers");
+            setSupportActionBar(toolbar);
 
-        progressBar = (ProgressBar) findViewById(R.id.mainPageProgressBar);
-        shoppingItemView = (ListView) findViewById(R.id.shoppingList);
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            // This listener is only for database with reference of key "items"
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+        } else {
+            setContentView(R.layout.activity_main_app_page);
 
-                // Now the Shopping List gets updated whenever the data changes in the server
-                shoppingItems = getAllItems(dataSnapshot);
-                adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
-                progressBar.setVisibility(View.GONE);
-                shoppingItemView.setAdapter(adapter);
-            }
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle("NITKart");
+            setSupportActionBar(toolbar);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+            FloatingActionButton shoppingCart = (FloatingActionButton) findViewById(R.id.cartMainPage);
+            shoppingCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), ShoppingCartWindow.class));
+                }
+            });
 
-        shoppingItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent productIntent = new Intent(MainAppPage.this, IndividualProduct.class);
-                productIntent.putExtra("product", shoppingItems.get(i));
-                startActivity(productIntent);
-            }
-        });
+            progressBar = (ProgressBar) findViewById(R.id.mainPageProgressBar);
+            shoppingItemView = (ListView) findViewById(R.id.shoppingList);
 
+            myRef.addValueEventListener(new ValueEventListener() {
+                // This listener is only for database with reference of key "items"
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+
+                    // Now the Shopping List gets updated whenever the data changes in the server
+                    shoppingItems = getAllItems(dataSnapshot);
+                    adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
+                    progressBar.setVisibility(View.GONE);
+                    shoppingItemView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+
+            shoppingItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent productIntent = new Intent(MainAppPage.this, IndividualProduct.class);
+                    productIntent.putExtra("product", shoppingItems.get(i));
+                    startActivity(productIntent);
+                }
+            });
+
+        }
     }
 
 

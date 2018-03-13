@@ -48,11 +48,20 @@
             android:inputType="textPassword" />
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/isseller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/loginForm"
+        android:checked="false"
+        android:text="If Seller, select this and login"/>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/loginForm"
+        android:layout_below="@id/isseller"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
@@ -64,63 +73,38 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/loginButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/forgot_password"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/newSellerRegistration"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="@string/sellerRegister"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+        android:layout_below="@id/forgotPassword">
 
-    <TextView
-        android:id="@+id/newUserRegistration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/newSellerRegistration"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="@string/register"
-        android:textSize="16sp" />
-
-</RelativeLayout><!--
         <TextView
-            android:id="@+id/iama"
-            android:padding="16dp"
+            android:layout_gravity="center"
+            android:id="@+id/newSellerRegistration"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/sellerRegister"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/newUserRegistration"
+            android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/welcome"
-            android:layout_centerHorizontal="true"
-            android:textSize="24sp"
-            android:text="I am a"/>
+            android:layout_weight="0.5"
+            android:layout_marginBottom="12dp"
+            android:text="@string/register"
+            android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/buyerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_margin="24dp"
-            android:padding="24dp"
-            android:text="Customer"
-            android:layout_below="@+id/iama"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/sellerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_margin="24dp"
-            android:padding="24dp"
-            android:text="Seller"
-            android:layout_marginTop="32dp"
-            android:layout_below="@+id/buyerButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-            -->
+    </LinearLayout>
+</RelativeLayout>

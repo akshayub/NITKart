@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,11 +25,13 @@ public class OpenScreen extends AppCompatActivity {
     private EditText user, pass;
     private TextView newUser, resetPassword, newSeller;
     private String username, password;
+    CheckBox checkBox;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     ProgressBar progressBar;
+    Boolean isSeller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class OpenScreen extends AppCompatActivity {
         resetPassword = (TextView) findViewById(R.id.forgotPassword);
         progressBar = (ProgressBar) findViewById(R.id.loginPageProgressBar);
 
+        checkBox = (CheckBox) findViewById(R.id.isseller);
+
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -53,7 +59,9 @@ public class OpenScreen extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Toast.makeText(getApplicationContext(), "Sign in Successful!", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
-                    startActivity(new Intent(getApplicationContext(), MainAppPage.class));
+                    Intent intent = new Intent(getApplicationContext(), MainAppPage.class);
+                    intent.putExtra("isuserseller", isSeller);
+                    startActivity(intent);
                     finish();
                 } else {
                     // User is signed out
@@ -69,6 +77,7 @@ public class OpenScreen extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 username = user.getText().toString();
                 password = pass.getText().toString();
+                isSeller = checkBox.isChecked();
                 setInputs(false);
                 signIn(username, password);
             }
@@ -77,7 +86,7 @@ public class OpenScreen extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Function not yet set.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(OpenScreen.this, forgotPassword.class));
             }
         });
 
