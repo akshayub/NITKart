@@ -48,20 +48,11 @@
             android:inputType="textPassword" />
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/isseller"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/loginForm"
-        android:checked="false"
-        android:text="If Seller, select this and login"/>
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/isseller"
+        android:layout_below="@id/loginForm"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
