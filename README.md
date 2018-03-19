@@ -1,5 +1,6 @@
 # NITKart
 ## Shopping application on Android
+<br>*As of now some changes are being made to the app. Work under progress*
 <br><br>
 This is a pure Android application. <br>
 It has the following features.
