@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
     tools:context="com.ub.akshay.nitkart.MainAppPage">
 
     <android.support.design.widget.AppBarLayout
@@ -27,31 +28,45 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_margin="8dp"
+        android:hint="Search"
+        android:id="@+id/searchBar"
+        />
+
     <ListView
         android:id="@+id/shoppingList"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/searchBar"
         android:paddingTop="8dp"
         android:paddingBottom="120dp"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:scrollbarStyle="outsideOverlay" />
 
+
+
+
     <ProgressBar
         android:id="@+id/mainPageProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/cartMainPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/background_light"
         app:srcCompat="@drawable/ic_shopping_cart_black_24dp" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

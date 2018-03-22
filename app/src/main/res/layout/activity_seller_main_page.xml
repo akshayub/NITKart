@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
     tools:context="com.ub.akshay.nitkart.MainAppPage">
 
     <android.support.design.widget.AppBarLayout
@@ -31,13 +32,23 @@
         android:id="@+id/sellerPageProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_margin="8dp"
+        android:hint="Search"
+        android:id="@+id/searchBar"
+        />
 
     <ListView
         android:id="@+id/sellerProductList"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/searchBar"
         android:paddingTop="8dp"
         android:paddingBottom="120dp"
         android:clipToPadding="false"
@@ -50,7 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawableLeft="@drawable/ic_add_black_24dp"
-        android:layout_gravity="right|bottom|end"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:text="Add Product"/>
 
 
@@ -60,9 +72,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:visibility="gone"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:text="@string/ifSellerListEmpty"
         />
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
