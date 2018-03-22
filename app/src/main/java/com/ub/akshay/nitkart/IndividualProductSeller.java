@@ -55,6 +55,7 @@ public class IndividualProductSeller extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         item = (ShoppingItem) getIntent().getSerializableExtra("product");
+        quantity = item.getQuantity();
 
         removeProduct = (Button) findViewById(R.id.deleteProductSeller);
 
@@ -98,9 +99,14 @@ public class IndividualProductSeller extends AppCompatActivity {
                                 break;
                             }
                         }
-                        Map<String, Object> cartItemsMap = new HashMap<>();
-                        cartItemsMap.put("products", productList);
-                        myRef.updateChildren(cartItemsMap);
+                        if(productList.size() == 0){
+                            myRef.child("isProdsEmpty").setValue(Boolean.TRUE.toString());
+                            productList.add(new ShoppingItem("", "", "", "", -1, -1));
+                        }
+
+                        Map<String, Object> seller_products = new HashMap<>();
+                        seller_products.put("products", productList);
+                        myRef.updateChildren(seller_products);
                         Toast.makeText(getApplicationContext(), "Removed!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
