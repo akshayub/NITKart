@@ -7,12 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ public class MainAppPage extends AppCompatActivity {
     ListView shoppingItemView;
     ShoppingListAdapter adapter;
     ProgressBar progressBar;
+    EditText searchbar;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     TextView ifSellerListEmpty;
@@ -54,6 +58,8 @@ public class MainAppPage extends AppCompatActivity {
             toolbar.setTitle("NITKart Sellers");
             setSupportActionBar(toolbar);
 
+            searchbar = (EditText)findViewById(R.id.searchBar);
+
             progressBar = (ProgressBar) findViewById(R.id.sellerPageProgressBar);
             progressBar.setVisibility(View.VISIBLE);
 
@@ -72,6 +78,7 @@ public class MainAppPage extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(Boolean.valueOf(dataSnapshot.child("isProdsEmpty").getValue().toString())){
                         shoppingItemView.setVisibility(View.GONE);
+                        searchbar.setVisibility(View.GONE);
                         ifSellerListEmpty.setVisibility(View.VISIBLE);
                     } else {
                         shoppingItemView.setVisibility(View.VISIBLE);
@@ -80,6 +87,33 @@ public class MainAppPage extends AppCompatActivity {
                         shoppingItems = setUpList(dataSnapshot.child("products"));
                         adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
                         shoppingItemView.setAdapter(adapter);
+
+                        shoppingItemView.setTextFilterEnabled(true);
+                        searchbar.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                int textlength = charSequence.length();
+                                ArrayList<ShoppingItem> tempShoppingItems = new ArrayList<>();
+                                for(ShoppingItem x: shoppingItems){
+                                    if (textlength <= x.getTitle().length()) {
+                                        if (x.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                                            tempShoppingItems.add(x);
+                                        }
+                                    }
+                                }
+                                shoppingItemView.setAdapter(new ShoppingListAdapter(getApplicationContext(), tempShoppingItems));
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
                     }
                     progressBar.setVisibility(View.GONE);
                 }
@@ -115,6 +149,8 @@ public class MainAppPage extends AppCompatActivity {
             toolbar.setTitle("NITKart");
             setSupportActionBar(toolbar);
 
+            searchbar = (EditText)findViewById(R.id.searchBar);
+
             FloatingActionButton shoppingCart = (FloatingActionButton) findViewById(R.id.cartMainPage);
             shoppingCart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -139,6 +175,33 @@ public class MainAppPage extends AppCompatActivity {
                     adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
                     progressBar.setVisibility(View.GONE);
                     shoppingItemView.setAdapter(adapter);
+
+                    shoppingItemView.setTextFilterEnabled(true);
+                    searchbar.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            int textlength = charSequence.length();
+                            ArrayList<ShoppingItem> tempShoppingItems = new ArrayList<>();
+                            for(ShoppingItem x: shoppingItems){
+                                if (textlength <= x.getTitle().length()) {
+                                    if (x.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                                        tempShoppingItems.add(x);
+                                    }
+                                }
+                            }
+                            shoppingItemView.setAdapter(new ShoppingListAdapter(getApplicationContext(), tempShoppingItems));
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                 }
 
                 @Override
