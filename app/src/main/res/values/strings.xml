@@ -5,6 +5,7 @@
     <string name="submit">Submit</string>
     <string name="reset_password_toast">Check mail to create new password</string>
     <string name="sellerRegister">Register as seller</string>
+    <string name="ifSellerListEmpty">It\'s empty in here. \nAdd something!</string>
 
 
     <!-- Strings related to login -->

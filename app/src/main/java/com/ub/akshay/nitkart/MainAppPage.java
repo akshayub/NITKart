@@ -12,8 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MainAppPage extends AppCompatActivity {
@@ -31,7 +35,9 @@ public class MainAppPage extends AppCompatActivity {
     ShoppingListAdapter adapter;
     ProgressBar progressBar;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("items");
+
+    TextView ifSellerListEmpty;
+    Button addProduct;
 
     private Boolean exit = false;
     private ArrayList<ShoppingItem> shoppingItems;
@@ -48,6 +54,59 @@ public class MainAppPage extends AppCompatActivity {
             toolbar.setTitle("NITKart Sellers");
             setSupportActionBar(toolbar);
 
+            progressBar = (ProgressBar) findViewById(R.id.sellerPageProgressBar);
+            progressBar.setVisibility(View.VISIBLE);
+
+            addProduct = (Button) findViewById(R.id.sellerAddProduct);
+            shoppingItemView = (ListView) findViewById(R.id.sellerProductList);
+
+            ifSellerListEmpty = (TextView) findViewById(R.id.ifSellerListEmpty);
+
+            addProduct = (Button) findViewById(R.id.sellerAddProduct);
+
+            DatabaseReference myref = database.getReference("sellers/" +
+                    FirebaseAuth.getInstance().getCurrentUser().getUid());
+            myref.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(Boolean.valueOf(dataSnapshot.child("isProdsEmpty").getValue().toString())){
+                        shoppingItemView.setVisibility(View.GONE);
+                        ifSellerListEmpty.setVisibility(View.VISIBLE);
+                    } else {
+                        shoppingItemView.setVisibility(View.VISIBLE);
+                        ifSellerListEmpty.setVisibility(View.GONE);
+
+                        shoppingItems = setUpList(dataSnapshot.child("products"));
+                        adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
+                        shoppingItemView.setAdapter(adapter);
+                    }
+                    progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "Failed to read value.", databaseError.toException());
+                }
+            });
+
+            addProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // add new layout and add product
+                    // then search
+                    startActivity(new Intent(MainAppPage.this, AddProductForm.class));
+                }
+            });
+
+            shoppingItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent productIntent = new Intent(MainAppPage.this, IndividualProductSeller.class);
+                    productIntent.putExtra("product", shoppingItems.get(i));
+                    startActivity(productIntent);
+                }
+            });
 
         } else {
             setContentView(R.layout.activity_main_app_page);
@@ -67,6 +126,7 @@ public class MainAppPage extends AppCompatActivity {
             progressBar = (ProgressBar) findViewById(R.id.mainPageProgressBar);
             shoppingItemView = (ListView) findViewById(R.id.shoppingList);
 
+            DatabaseReference myRef = database.getReference("items");
             myRef.addValueEventListener(new ValueEventListener() {
                 // This listener is only for database with reference of key "items"
                 @Override
@@ -160,6 +220,37 @@ public class MainAppPage extends AppCompatActivity {
         }
 
         return items;
+    }
+
+    public static ArrayList<ShoppingItem> setUpList(DataSnapshot dataSnapshot) {
+
+        ArrayList<ShoppingItem> items  = new ArrayList<ShoppingItem>();
+
+        for (DataSnapshot snap : dataSnapshot.getChildren()){
+
+            int itemPrice = -1, quantity = 0;
+
+            try{
+                itemPrice = Integer.valueOf(NumberFormat.getCurrencyInstance()
+                        .parse(String.valueOf(snap.child("price").getValue()))
+                        .toString());
+            } catch (ParseException e){
+                e.printStackTrace();
+            }
+
+            quantity = Integer.valueOf(snap.child("quantity").getValue().toString());
+            items.add(new ShoppingItem(
+                    snap.child("productID").getValue().toString(),
+                    snap.child("title").getValue().toString(),
+                    snap.child("type").getValue().toString(),
+                    snap.child("description").getValue().toString(),
+                    itemPrice,
+                    quantity
+            ));
+        }
+
+        return items;
+
     }
 
 }

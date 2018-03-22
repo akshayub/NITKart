@@ -75,7 +75,7 @@ public class IndividualProduct extends AppCompatActivity {
                     myRef = database.getReference("users/"+user.getUid());
 
                     // adding value event listener for myRef
-                    myRef.addValueEventListener(new ValueEventListener() {
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             IndividualProduct.this.dataSnapshot = dataSnapshot;
