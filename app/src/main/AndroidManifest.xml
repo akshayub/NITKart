@@ -34,7 +34,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ShoppingCartWindow" />
         <activity android:name=".CheckOutScreen" />
-        <activity android:name=".forgotPassword"></activity>
+        <activity android:name=".forgotPassword" />
+        <activity android:name=".IndividualProductSeller" />
+        <activity android:name=".AddProductForm"></activity>
     </application>
 
 </manifest>

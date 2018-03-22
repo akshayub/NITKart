@@ -54,7 +54,7 @@ public class OpenScreen extends AppCompatActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     FirebaseDatabase.getInstance().getReference("sellers/" + user.getUid())
-                            .addValueEventListener(new ValueEventListener() {
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Intent intent = new Intent(getApplicationContext(), MainAppPage.class);

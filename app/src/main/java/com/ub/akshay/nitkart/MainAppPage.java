@@ -62,6 +62,8 @@ public class MainAppPage extends AppCompatActivity {
 
             ifSellerListEmpty = (TextView) findViewById(R.id.ifSellerListEmpty);
 
+            addProduct = (Button) findViewById(R.id.sellerAddProduct);
+
             DatabaseReference myref = database.getReference("sellers/" +
                     FirebaseAuth.getInstance().getCurrentUser().getUid());
             myref.addValueEventListener(new ValueEventListener() {
@@ -76,7 +78,6 @@ public class MainAppPage extends AppCompatActivity {
                         ifSellerListEmpty.setVisibility(View.GONE);
 
                         shoppingItems = setUpList(dataSnapshot.child("products"));
-                        Log.e("blabla",shoppingItems.get(0).getTitle().toString());
                         adapter = new ShoppingListAdapter(getApplicationContext(), shoppingItems);
                         shoppingItemView.setAdapter(adapter);
                     }
@@ -86,6 +87,24 @@ public class MainAppPage extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.w(TAG, "Failed to read value.", databaseError.toException());
+                }
+            });
+
+            addProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // add new layout and add product
+                    // then search
+                    startActivity(new Intent(MainAppPage.this, AddProductForm.class));
+                }
+            });
+
+            shoppingItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent productIntent = new Intent(MainAppPage.this, IndividualProductSeller.class);
+                    productIntent.putExtra("product", shoppingItems.get(i));
+                    startActivity(productIntent);
                 }
             });
 
@@ -220,7 +239,6 @@ public class MainAppPage extends AppCompatActivity {
             }
 
             quantity = Integer.valueOf(snap.child("quantity").getValue().toString());
-
             items.add(new ShoppingItem(
                     snap.child("productID").getValue().toString(),
                     snap.child("title").getValue().toString(),
